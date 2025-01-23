@@ -101,18 +101,10 @@ SOLUTION 1
   - iterate throuh the array of objects and get the values of each property and  add them to the set 
   - if the propertiesa are not unique and not all the same for all cards return false
 - return true
-
-SOLUTION 2j
- get object of properties as keys and values in an array 
-  -  
- iterate through array and check if each subarray values are not unique and not all the sane 
-  - return false
-- return true
  */
-function isSet (cards) {
-  let diffCount = 0; 
+
+/*function isSet (cards) {
   const props = Object.keys(cards[0]);
-  //console.log({props});
   for (let i = 0; i < props.length; i += 1) {
     const prop = props[i];
     const set = new Set();
@@ -120,6 +112,33 @@ function isSet (cards) {
      set.add(cards[j][prop]); /// the dot operator using the actual string to look up the keys; use [] for variables
    }
     console.log({set});
+    if (set.size !== 1 &&  set.size !== cards.length) return false; //properties are not unique and not all the same for all cards 
+  }
+  return true;
+}
+*/
+/*
+SOLUTION 2
+ - init a result array to an empty array 
+ get an array of subarrays where the subarrays consist of the of the values of the card 
+  - iterate through the cards and add the values to the result array 
+  - iterate through each property value
+    - init a set to empty set
+    - iterate through each card
+    - add the values to the set
+  - check if the values are not unique and not all the same for all card return false
+- return true
+ */
+
+function isSet (cards) {
+  const propValues = cards.map(card => Object.values(card));
+  console.log({propValues});
+  for (let propIdx = 0; propIdx < propValues[0].length; propIdx += 1) {
+    const set = new Set();
+    for (let cardIdx = 0; cardIdx < propValues.length; cardIdx +=1) {
+      //console.log(propValues[cardIdx][propIdx]);//change the card on each iteration in the inner loop
+      set.add(propValues[cardIdx][propIdx]);
+    }
     if (set.size !== 1 &&  set.size !== cards.length) return false; //properties are not unique and not all the same for all cards 
   }
   return true;
@@ -142,3 +161,5 @@ console.log(isSet([
   { color: "green", number: 1, shade: "full", shape: "oval" },
   { color: "red", number: 3, shade: "full", shape: "oval" }
 ]))// ➞ false
+
+
